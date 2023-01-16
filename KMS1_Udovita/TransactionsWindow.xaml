@@ -1,0 +1,85 @@
+﻿<Window x:Class="KMS1_Udovita.TransactionsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KMS1_Udovita"
+        mc:Ignorable="d"
+        Title="TransactionsWindow" Height="700" Width="1000"
+        x:Name="transWindow"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="600"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition />
+            <RowDefinition Height="20"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Received" Grid.Column="0" Grid.Row="0"/>
+        <DataGrid x:Name="senderDataGrid" 
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  Grid.Column="0" Grid.Row="1">
+            
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Sender" Binding="{Binding ReceiverAccountNr}" Width="*"/>
+                <DataGridTextColumn Header="Usage" Binding="{Binding Usage}" Width="*"/>
+                <DataGridTextColumn Header="Date of Transaction" Binding="{Binding BookingDate}" Width="*"/>
+                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <TextBlock Text="Sent" Grid.Column="0" Grid.Row="2"/>
+        <DataGrid x:Name="receiverDataGrid" 
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  Grid.Column="0" Grid.Row="3">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Receiver" Binding="{Binding SenderAccountNr}" Width="*"/>
+                <DataGridTextColumn Header="Usage" Binding="{Binding Usage}" Width="*"/>
+                <DataGridTextColumn Header="Date of Transaction" Binding="{Binding BookingDate}" Width="*"/>
+                <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" Width="*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <TextBlock x:Name="txtSent" 
+                   FontSize="14"
+                   Text="{Binding SentAmount, StringFormat='Sent Amount: {0}€'}"
+                   Grid.Column="1" Grid.Row="3"
+                   Margin="0,30,0,0"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"/>
+        <TextBlock x:Name="txtReceived"
+                   FontSize="14"
+                   Text="{Binding ReceivedAmount, StringFormat='Received Amount: {0}€'}"
+                   Grid.Column="1" Grid.Row="3"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"/>
+        <TextBlock x:Name="txtTotal"
+                   FontSize="14"
+                   FontWeight="Bold"
+                   Margin="0,80,0,0"
+                   Text="{Binding Balance, StringFormat='Balance: {0}€'}"
+                   Grid.Column="1" Grid.Row="3"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center"/>
+
+        <Button 
+                x:Name="btnSave"
+                Click="btnSave_Click"
+                Cursor="Hand"
+                Grid.Row="1"
+                Grid.Column="1"
+                Content="Save Account Transactions"
+                Foreground="Black"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Margin="10,0,20,25"/>
+    </Grid>
+</Window>
