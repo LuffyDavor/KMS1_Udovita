@@ -26,11 +26,12 @@ namespace KMS1_Udovita
         public TransactionsWindow(TransactionsFilter filter, AccountModel selectedAccount)
         {
             InitializeComponent();
-            Filter= filter;
+            Filter = filter;
 
             transWindow.DataContext = Filter;
             senderDataGrid.ItemsSource = Filter.FilteredListSender;
             receiverDataGrid.ItemsSource = Filter.FilteredListReceiver;
+
             txtSent.DataContext = selectedAccount;
             txtReceived.DataContext = selectedAccount;
             txtTotal.DataContext = selectedAccount;

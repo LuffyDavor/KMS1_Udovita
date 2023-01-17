@@ -59,6 +59,7 @@
     <Compile Include="AccountsWindow.xaml.cs">
       <DependentUpon>AccountsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="IWindow.cs" />
     <Compile Include="Filters\AccountsFilter.cs" />
     <Compile Include="Filters\TransactionsFilter.cs" />
     <Compile Include="Models\AccountModel.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Models\CustomerModel.cs" />
     <Compile Include="Models\TransactionModel.cs" />
     <Compile Include="Readers\Reader.cs" />
+    <Compile Include="Readers\StoreData.cs" />
     <Compile Include="TransactionsWindow.xaml.cs">
       <DependentUpon>TransactionsWindow.xaml</DependentUpon>
     </Compile>

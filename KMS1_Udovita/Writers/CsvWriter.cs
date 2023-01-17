@@ -23,49 +23,31 @@ namespace KMS1_Udovita.Writers
                     string senderFilePath = Path.Combine(folderPath, "SenderTransactions.csv");
                     string receiverFilePath = Path.Combine(folderPath, "ReceiverTransactions.csv");
 
-                    SaveSender(senderFilePath);
+                    SaveTransactions(senderFilePath, Filter.FilteredListSender);
 
-                    SaveReceiver(receiverFilePath);
+                    SaveTransactions(receiverFilePath, Filter.FilteredListReceiver);
 
                     MessageBox.Show($"Data exported successfully to:{senderFilePath} and {receiverFilePath}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
 
-        private void SaveReceiver(string receiverFilePath)
+        private void SaveTransactions(string filePath, List<TransactionModel> transactions)
         {
-            using (StreamWriter receiverStreamWriter = new StreamWriter(receiverFilePath))
+            using (StreamWriter streamWriter = new StreamWriter(filePath))
             {
-                receiverStreamWriter.WriteLine("Sender-KntNr,Empfaenger-KntNr,Verwendungszweck,Betrag,Buchungsdatum");
-                foreach (TransactionModel transaction in Filter.FilteredListReceiver)
+                streamWriter.WriteLine("Sender-KntNr,Empfaenger-KntNr,Verwendungszweck,Betrag,Buchungsdatum");
+                foreach (TransactionModel transaction in transactions)
                 {
-                    receiverStreamWriter.WriteLine(string.Join(",",
-                                                               transaction.SenderAccountNr,
-                                                               transaction.ReceiverAccountNr,
-                                                               transaction.Usage,
-                                                               transaction.Amount,
-                                                               transaction.BookingDate));
+                    streamWriter.WriteLine(string.Join(",",
+                                                        transaction.SenderAccountNr,
+                                                        transaction.ReceiverAccountNr,
+                                                        transaction.Usage,
+                                                        transaction.Amount,
+                                                        transaction.BookingDate));
                 }
             }
         }
-
-        private void SaveSender( string senderFilePath)
-        {
-            using (StreamWriter senderStreamWriter = new StreamWriter(senderFilePath))
-            {
-                senderStreamWriter.WriteLine("Sender-KntNr,Empfaenger-KntNr,Verwendungszweck,Betrag,Buchungsdatum");
-                foreach (TransactionModel transaction in Filter.FilteredListSender)
-                {
-                    senderStreamWriter.WriteLine(string.Join(",",
-                                                             transaction.SenderAccountNr,
-                                                             transaction.ReceiverAccountNr,
-                                                             transaction.Usage,
-                                                             transaction.Amount,
-                                                             transaction.BookingDate));
-                }
-            }
-        }
-
 
     }
 }

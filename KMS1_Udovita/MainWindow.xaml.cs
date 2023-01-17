@@ -20,15 +20,33 @@ namespace KMS1_Udovita
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, IWindowMethods
     {
         public static CsvReader csvReader = new CsvReader();
         public MainWindow()
         {
 
             InitializeComponent();
+            HandleDetailsBtn();
 
-            customersDataGrid.SelectionChanged += (s, e) => {
+        }
+        public void ChangeWindow()
+        {
+            CustomerModel selectedCustomer = (CustomerModel)customersDataGrid.SelectedItem;
+
+            AccountsFilter filter = new AccountsFilter();
+            filter.FilterData(selectedCustomer);
+
+            AccountsWindow accountsWindow = new AccountsWindow(filter);
+            accountsWindow.Show();
+
+            this.Close();
+        }
+
+        private void HandleDetailsBtn()
+        {
+            customersDataGrid.SelectionChanged += (s, e) =>
+            {
                 if (customersDataGrid.SelectedItem == null)
                 {
                     btnDetails.IsEnabled = false;
@@ -48,31 +66,30 @@ namespace KMS1_Udovita
             csvReader.StoreAccountData();
             csvReader.StoreTransactionData();
 
-            myWindow.DataContext = csvReader;
-            customersDataGrid.ItemsSource = csvReader.AllCustomerData;
-
             if (csvReader.Customers == null || csvReader.Accounts == null || csvReader.Transactions == null)
             {
-                MainWindow mainWindow = new MainWindow();
-                mainWindow.Show();
-                Close();
-
+                return;
             }
+
+            btnImport.IsEnabled= false;
+            //myWindow.DataContext = csvReader;
+            customersDataGrid.ItemsSource = csvReader.AllCustomerData;
 
         }
 
         private void btnDetails_Click(object sender, RoutedEventArgs e)
         {
-            CustomerModel selectedCustomer = (CustomerModel)customersDataGrid.SelectedItem;
-
-            AccountsFilter filter = new AccountsFilter();
-            filter.FilterData(selectedCustomer);
-
-            var accountsWindow = new AccountsWindow(filter, selectedCustomer);
-            accountsWindow.Show();
-
-            this.Close();
+            ChangeWindow();
 
         }
+
+        private void customersDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if(customersDataGrid.Items.Count != 0) 
+            { 
+                ChangeWindow(); 
+            }
+        }
+
     }
 }

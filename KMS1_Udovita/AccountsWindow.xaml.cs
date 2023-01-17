@@ -21,17 +21,23 @@ namespace KMS1_Udovita
     /// <summary>
     /// Interaction logic for AccountsWindow.xaml
     /// </summary>
-    public partial class AccountsWindow : Window
+    public partial class AccountsWindow : Window, IWindowMethods
     {
-        public AccountsWindow(AccountsFilter filter, CustomerModel selectedCustomer)
+        public AccountsWindow(AccountsFilter filter)
         {
             InitializeComponent();
 
-
-
-            accountsWindow.DataContext = filter;
+            //accountsWindow.DataContext = filter;
             accountsDataGrid.ItemsSource = filter.FilteredList;
-            accountsDataGrid.SelectionChanged += (s, e) => {
+            HandleDetailsBtn();
+            //this.Closing += AccountsWindow_Closed;
+        }
+
+        private void HandleDetailsBtn()
+        {
+            // HANDLING BTN "DETAILS" ENABLE/DISABLE
+            accountsDataGrid.SelectionChanged += (s, e) =>
+            {
                 if (accountsDataGrid.SelectedItem == null)
                 {
                     btnDetails.IsEnabled = false;
@@ -43,14 +49,36 @@ namespace KMS1_Udovita
             };
         }
 
-        private void btnDetails_Click(object sender, RoutedEventArgs e)
+        public void ChangeWindow()
         {
             AccountModel selectedAccount = (AccountModel)accountsDataGrid.SelectedItem;
+
             TransactionsFilter filter = new TransactionsFilter();
             filter.FilterData(selectedAccount);
-            var transactionsWindow = new TransactionsWindow(filter, selectedAccount);
+
+            TransactionsWindow transactionsWindow = new TransactionsWindow(filter, selectedAccount);
             transactionsWindow.Show();
+
             this.Close();
+        }
+
+        private void AccountsWindow_Closed(object sender, EventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            mainWindow.customersDataGrid.ItemsSource = MainWindow.csvReader.AllCustomerData;
+        }
+        private void btnDetails_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeWindow();
+        }
+
+        private void accountsDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (accountsDataGrid.Items.Count != 0)
+            {
+                ChangeWindow();
+            }
         }
     }
 }

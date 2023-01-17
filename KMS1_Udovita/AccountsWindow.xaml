@@ -16,7 +16,8 @@
 
         <DataGrid x:Name="accountsDataGrid" 
                   AutoGenerateColumns="False"
-                  IsReadOnly="True" >
+                  IsReadOnly="True"
+                  MouseDoubleClick="accountsDataGrid_MouseDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="IBAN" 
                                     Binding="{Binding AccountNumber}"

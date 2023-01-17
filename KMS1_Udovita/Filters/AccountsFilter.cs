@@ -13,9 +13,7 @@ namespace KMS1_Udovita.Filters
         public List<AccountModel> FilteredList { get => _filteredList; set => _filteredList = value; }
 
 
-
-
-        public void FilterData(CustomerModel selectedCustomer)
+        public void FilterData(CustomerModel selectedCustomer) 
         {
 
             foreach (AccountModel acc in MainWindow.csvReader.AllAccountData)

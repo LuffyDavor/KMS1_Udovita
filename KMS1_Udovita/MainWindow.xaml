@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:KMS1_Udovita"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
-        x:Name="myWindow">
+        x:Name="myWindow"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="600"/>
@@ -15,7 +16,8 @@
 
         <DataGrid x:Name="customersDataGrid" 
                   AutoGenerateColumns="False"
-                  IsReadOnly="True">
+                  IsReadOnly="True"
+                  MouseDoubleClick="customersDataGrid_MouseDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Customer ID" 
                                     Binding="{Binding CustomerID}" 

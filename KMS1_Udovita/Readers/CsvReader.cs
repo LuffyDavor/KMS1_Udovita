@@ -17,6 +17,8 @@ namespace KMS1_Udovita
         public string[] Customers { get; private set; }
         public string[] Accounts { get; private set; }
         public string[] Transactions { get; private set; }
+      
+
         public override void OpenFiles()
         {
             using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
@@ -42,6 +44,7 @@ namespace KMS1_Udovita
                 }
             }
         }
+
         public void StoreCustomerData()
         {
             if(Customers == null ) { return; }
