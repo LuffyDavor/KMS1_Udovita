@@ -37,13 +37,13 @@ namespace KMS1_Udovita
             AccountsFilter filter = new AccountsFilter();
             filter.FilterData(selectedCustomer);
 
-            AccountsWindow accountsWindow = new AccountsWindow(filter);
+            AccountsWindow accountsWindow = new AccountsWindow(this, filter);
             accountsWindow.Show();
 
-            this.Close();
+            this.Hide();
         }
 
-        private void HandleDetailsBtn()
+        public void HandleDetailsBtn()
         {
             customersDataGrid.SelectionChanged += (s, e) =>
             {
@@ -58,10 +58,10 @@ namespace KMS1_Udovita
             };
         }
 
-        private void btnImport_Click(object sender, RoutedEventArgs e)
+        private async void btnImport_Click(object sender, RoutedEventArgs e)
         {
 
-            csvReader.OpenFiles();
+            await csvReader.OpenFiles();
             csvReader.StoreCustomerData();
             csvReader.StoreAccountData();
             csvReader.StoreTransactionData();
@@ -72,7 +72,6 @@ namespace KMS1_Udovita
             }
 
             btnImport.IsEnabled= false;
-            //myWindow.DataContext = csvReader;
             customersDataGrid.ItemsSource = csvReader.AllCustomerData;
 
         }

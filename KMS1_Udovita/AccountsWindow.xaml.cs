@@ -2,6 +2,7 @@
 using KMS1_Udovita.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -23,17 +25,23 @@ namespace KMS1_Udovita
     /// </summary>
     public partial class AccountsWindow : Window, IWindowMethods
     {
-        public AccountsWindow(AccountsFilter filter)
+        private static MainWindow _mainWindow;
+        public AccountsWindow(MainWindow mainWindow, AccountsFilter filter)
         {
             InitializeComponent();
 
-            //accountsWindow.DataContext = filter;
+            _mainWindow = mainWindow;
             accountsDataGrid.ItemsSource = filter.FilteredList;
             HandleDetailsBtn();
-            //this.Closing += AccountsWindow_Closed;
+            Closing += AccountsWindow_Closing;
         }
 
-        private void HandleDetailsBtn()
+        private void AccountsWindow_Closing(object sender, CancelEventArgs e)
+        {
+            _mainWindow.Show();
+        }
+
+        public void HandleDetailsBtn()
         {
             // HANDLING BTN "DETAILS" ENABLE/DISABLE
             accountsDataGrid.SelectionChanged += (s, e) =>
@@ -56,18 +64,13 @@ namespace KMS1_Udovita
             TransactionsFilter filter = new TransactionsFilter();
             filter.FilterData(selectedAccount);
 
-            TransactionsWindow transactionsWindow = new TransactionsWindow(filter, selectedAccount);
+            TransactionsWindow transactionsWindow = new TransactionsWindow(this, filter, selectedAccount);
             transactionsWindow.Show();
 
-            this.Close();
+            this.Hide();
         }
 
-        private void AccountsWindow_Closed(object sender, EventArgs e)
-        {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
-            mainWindow.customersDataGrid.ItemsSource = MainWindow.csvReader.AllCustomerData;
-        }
+
         private void btnDetails_Click(object sender, RoutedEventArgs e)
         {
             ChangeWindow();

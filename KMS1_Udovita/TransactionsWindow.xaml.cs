@@ -3,6 +3,7 @@ using KMS1_Udovita.Models;
 using KMS1_Udovita.Writers;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,18 +24,31 @@ namespace KMS1_Udovita
     public partial class TransactionsWindow : Window
     {
         public static TransactionsFilter Filter { get; private set; }
-        public TransactionsWindow(TransactionsFilter filter, AccountModel selectedAccount)
+        public static AccountModel SelectedAccount { get; private set; }
+        private AccountsWindow _accountsWindow;
+        public TransactionsWindow(AccountsWindow accountsWindow, TransactionsFilter filter, AccountModel selectedAccount)
         {
             InitializeComponent();
             Filter = filter;
+            SelectedAccount = selectedAccount;
+            _accountsWindow = accountsWindow;
 
             transWindow.DataContext = Filter;
             senderDataGrid.ItemsSource = Filter.FilteredListSender;
             receiverDataGrid.ItemsSource = Filter.FilteredListReceiver;
 
-            txtSent.DataContext = selectedAccount;
-            txtReceived.DataContext = selectedAccount;
-            txtTotal.DataContext = selectedAccount;
+            txtSent.DataContext = SelectedAccount;
+            txtReceived.DataContext = SelectedAccount;
+            txtTotal.DataContext = SelectedAccount;
+
+            Closing += TransactionsWindow_Closing;
+
+
+        }
+
+        private void TransactionsWindow_Closing(object sender, CancelEventArgs e)
+        {
+            _accountsWindow.Show();
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -42,5 +56,6 @@ namespace KMS1_Udovita
             CsvWriter csvWriter= new CsvWriter();
             csvWriter.SaveFiles();
         }
+
     }
 }

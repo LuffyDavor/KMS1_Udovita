@@ -17,6 +17,8 @@ namespace KMS1_Udovita.Writers
         {
             using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
             {
+                folderDialog.SelectedPath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\"));
+
                 if (folderDialog.ShowDialog() == DialogResult.OK)
                 {
                     string folderPath = folderDialog.SelectedPath;
@@ -46,6 +48,7 @@ namespace KMS1_Udovita.Writers
                                                         transaction.Amount,
                                                         transaction.BookingDate));
                 }
+                streamWriter.Close();
             }
         }
 

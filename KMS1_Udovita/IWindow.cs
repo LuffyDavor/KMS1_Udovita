@@ -10,5 +10,6 @@ namespace KMS1_Udovita
     public interface IWindowMethods
     {
         void ChangeWindow();
+        void HandleDetailsBtn();
     }
 }

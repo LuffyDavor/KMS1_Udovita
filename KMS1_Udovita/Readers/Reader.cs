@@ -25,6 +25,6 @@ namespace KMS1_Udovita.Readers
         protected CustomerModel _customerData;
         protected AccountModel _accountData;
         protected TransactionModel _transactionData;
-        public abstract void OpenFiles();
+        public abstract Task OpenFiles();
     }
 }

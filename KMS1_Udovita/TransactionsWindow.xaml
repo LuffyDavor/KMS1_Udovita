@@ -30,7 +30,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Sender" Binding="{Binding ReceiverAccountNr}" Width="*"/>
                 <DataGridTextColumn Header="Usage" Binding="{Binding Usage}" Width="*"/>
-                <DataGridTextColumn Header="Date of Transaction" Binding="{Binding BookingDate}" Width="*"/>
+                <DataGridTextColumn SortDirection="Descending" Header="Date of Transaction" Binding="{Binding BookingDate}" Width="*"/>
                 <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>
@@ -43,7 +43,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Receiver" Binding="{Binding SenderAccountNr}" Width="*"/>
                 <DataGridTextColumn Header="Usage" Binding="{Binding Usage}" Width="*"/>
-                <DataGridTextColumn Header="Date of Transaction" Binding="{Binding BookingDate}" Width="*"/>
+                <DataGridTextColumn SortDirection="Descending" Header="Date of Transaction" Binding="{Binding BookingDate}" Width="*"/>
                 <DataGridTextColumn Header="Amount" Binding="{Binding Amount}" Width="*"/>
             </DataGrid.Columns>
         </DataGrid>

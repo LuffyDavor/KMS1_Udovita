@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -18,11 +19,12 @@ namespace KMS1_Udovita
         public string[] Accounts { get; private set; }
         public string[] Transactions { get; private set; }
       
-
-        public override void OpenFiles()
+        public override async Task OpenFiles()
         {
             using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
             {
+                folderDialog.SelectedPath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\"));
+
                 if (folderDialog.ShowDialog() == DialogResult.OK)
                 {
                     string folderPath = folderDialog.SelectedPath;
@@ -32,10 +34,14 @@ namespace KMS1_Udovita
                         File.Exists(Path.Combine(folderPath, "Konten.csv")) &&
                         File.Exists(Path.Combine(folderPath, "Buchungen.csv")))
                     {
+                        Customers = await Task.Run(() => File.ReadAllLines(Path.Combine(folderPath, "Kunden.csv"))).ConfigureAwait(false);
+                        Customers = Customers.Skip(1).ToArray();
 
-                        Customers = File.ReadAllLines(Path.Combine(folderPath, "Kunden.csv")).Skip(1).ToArray();
-                        Accounts = File.ReadAllLines(Path.Combine(folderPath, "Konten.csv")).Skip(1).ToArray();
-                        Transactions = File.ReadAllLines(Path.Combine(folderPath, "Buchungen.csv")).Skip(1).ToArray();
+                        Accounts = await Task.Run(() => File.ReadAllLines(Path.Combine(folderPath, "Konten.csv"))).ConfigureAwait(false);
+                        Accounts = Accounts.Skip(1).ToArray();
+
+                        Transactions = await Task.Run(() => File.ReadAllLines(Path.Combine(folderPath, "Buchungen.csv"))).ConfigureAwait(false);
+                        Transactions = Transactions.Skip(1).ToArray();
                     }
                     else
                     {
@@ -44,6 +50,7 @@ namespace KMS1_Udovita
                 }
             }
         }
+
 
         public void StoreCustomerData()
         {
