@@ -47,6 +47,17 @@ namespace KMS1_Udovita
 
 
         }
+        private void CheckComboBoxes()
+        {
+            if (boxYear.SelectedItem == null || boxMonth.SelectedItem == null)
+            {
+                btnOrder.IsEnabled = false;
+            }
+            else
+            {
+                btnOrder.IsEnabled = true;
+            }
+        }
 
         private void TransactionsWindow_Closing(object sender, CancelEventArgs e)
         {
@@ -63,7 +74,19 @@ namespace KMS1_Udovita
 
         private void btnOrder_Click(object sender, RoutedEventArgs e)
         {
+            Filter.FilterByDate(boxYear.Text, boxMonth.Text);
+            senderDataGrid.ItemsSource = Filter.FilteredListSender;
+            receiverDataGrid.ItemsSource = Filter.FilteredListReceiver;
+        }
 
+        private void boxYear_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            CheckComboBoxes();
+        }
+
+        private void boxMonth_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            CheckComboBoxes();
         }
     }
 }

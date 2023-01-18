@@ -1,5 +1,7 @@
 ﻿using KMS1_Udovita.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace KMS1_Udovita.Filters
 {
@@ -31,7 +33,21 @@ namespace KMS1_Udovita.Filters
                 }
             }
         }
-        
+
+        public void FilterByDate(string year, string month)
+        {
+            int yearInt = int.Parse(year);
+            int monthInt = int.Parse(month);
+
+            FilteredListSender = FilteredListSender.Where(trans => 
+                                                          trans.BookingDate.Year == yearInt && 
+                                                          trans.BookingDate.Month == monthInt).ToList();
+
+
+            FilteredListReceiver = FilteredListReceiver.Where(trans =>
+                                                          trans.BookingDate.Year == yearInt &&
+                                                          trans.BookingDate.Month == monthInt).ToList();
+        }
 
     }
 }
