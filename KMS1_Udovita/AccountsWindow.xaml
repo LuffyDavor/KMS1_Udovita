@@ -5,18 +5,56 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KMS1_Udovita"
         mc:Ignorable="d"
-        Title="AccountsWindow" Height="450" Width="800"
+        Title="Accounts" Height="400" Width="800"
         x:Name="accountsWindow"
+
         WindowStartupLocation="CenterScreen">
+    <Window.Background>
+        <ImageBrush ImageSource="Images/br.png" Stretch="Fill" Opacity="0.2" />
+    </Window.Background>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="600"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="0" 
+                    Grid.ColumnSpan="1" 
+                    Margin="10,0,0,0">
+            
+            <TextBlock x:Name="txtCustomerID" 
+                   FontSize="20"
+                   Text="{Binding CustomerID, StringFormat='ID: {0}'}"
+                   Foreground="White"
+                   Margin="0,10,5,0"
+                   VerticalAlignment="Top"/>
+
+            <TextBlock x:Name="txtCustomerName" 
+                   FontSize="20"
+                   Text="{Binding Name, StringFormat='NAME: {0}'}"
+                   Foreground="White"
+                   Margin="30,10,5,0"
+                   VerticalAlignment="Top"/>
+            
+        </StackPanel>
+
+
+
         <DataGrid x:Name="accountsDataGrid" 
                   AutoGenerateColumns="False"
+                  Grid.Row="1"
+                  Margin="10,10,10,10"
                   IsReadOnly="True"
+                  VerticalScrollBarVisibility="Hidden"
+                  HorizontalScrollBarVisibility="Hidden"
+                  BorderThickness="0"
+                  Style="{StaticResource myGrid}"
                   MouseDoubleClick="accountsDataGrid_MouseDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="IBAN" 
@@ -33,15 +71,17 @@
 
         <Button 
                 x:Name="btnDetails"
+                Style="{StaticResource myBtn}"
+                Visibility="Hidden"
                 Click="btnDetails_Click"
+                Margin="0,10,10,0"
                 IsEnabled="False"
                 Cursor="Hand"
                 Grid.Row="1"
                 Grid.Column="1"
-                Content="Details"
+                Content="Show Account Details"
                 Foreground="Black"
-                HorizontalAlignment="Left"
-                Margin="10,0,20,25"
-                VerticalAlignment="Bottom" Height="30" Width="80"/>
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"/>
     </Grid>
 </Window>

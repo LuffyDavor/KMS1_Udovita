@@ -1,19 +1,7 @@
 ﻿using KMS1_Udovita.Filters;
 using KMS1_Udovita.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace KMS1_Udovita
 {
@@ -23,6 +11,7 @@ namespace KMS1_Udovita
     public partial class MainWindow : Window, IWindowMethods
     {
         public static CsvReader csvReader = new CsvReader();
+
         public MainWindow()
         {
 
@@ -32,12 +21,15 @@ namespace KMS1_Udovita
         }
         public void ChangeWindow()
         {
+            // GET SELECTED CUSTOMER
             CustomerModel selectedCustomer = (CustomerModel)customersDataGrid.SelectedItem;
 
+            // FILTER DATA FOR ACCOUNTS WINDOW BASED ON SELECTED CUSTOMER
             AccountsFilter filter = new AccountsFilter();
             filter.FilterData(selectedCustomer);
 
-            AccountsWindow accountsWindow = new AccountsWindow(this, filter);
+            // CREATE NEW ACCOUNTS WINDOW PASSING THE FILTERED DATA
+            AccountsWindow accountsWindow = new AccountsWindow(this, filter, selectedCustomer);
             accountsWindow.Show();
 
             this.Hide();
@@ -50,9 +42,11 @@ namespace KMS1_Udovita
                 if (customersDataGrid.SelectedItem == null)
                 {
                     btnDetails.IsEnabled = false;
+                    btnDetails.Visibility = Visibility.Hidden;
                 }
                 else
                 {
+                    btnDetails.Visibility = Visibility.Visible;
                     btnDetails.IsEnabled = true;
                 }
             };
@@ -60,18 +54,24 @@ namespace KMS1_Udovita
 
         private async void btnImport_Click(object sender, RoutedEventArgs e)
         {
-
+            // GET DATA
             await csvReader.OpenFiles();
             csvReader.StoreCustomerData();
             csvReader.StoreAccountData();
             csvReader.StoreTransactionData();
 
+            // CHECK IF SUCCESSFUL ELSE CANCEL PROCESS
             if (csvReader.Customers == null || csvReader.Accounts == null || csvReader.Transactions == null)
             {
                 return;
             }
 
+            // IF SUCCESSFUL DISABLE BUTTON AND ENABLE DETAILS BUTTON
             btnImport.IsEnabled= false;
+            btnImport.Visibility= Visibility.Hidden;
+            HandleDetailsBtn();
+
+            // SET CUSTOMER GRID DATA SOURCE
             customersDataGrid.ItemsSource = csvReader.AllCustomerData;
 
         }
@@ -84,7 +84,7 @@ namespace KMS1_Udovita
 
         private void customersDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            if(customersDataGrid.Items.Count != 0) 
+            if(customersDataGrid.Items.Count != 0 && customersDataGrid.SelectedItem != null) 
             { 
                 ChangeWindow(); 
             }

@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-
-namespace KMS1_Udovita
+﻿namespace KMS1_Udovita
 {
     public interface IWindowMethods
     {
+        /// <summary>
+        /// Changes window based on current window
+        /// </summary>
         void ChangeWindow();
+        /// <summary>
+        /// Handles how the "Details" button is affected by other actions
+        /// </summary>
         void HandleDetailsBtn();
     }
 }

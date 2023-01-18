@@ -1,9 +1,5 @@
 ﻿using KMS1_Udovita.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KMS1_Udovita.Filters
 {
@@ -15,6 +11,11 @@ namespace KMS1_Udovita.Filters
 
         private List<TransactionModel> _filteredListReceiver = new List<TransactionModel>();
         public List<TransactionModel> FilteredListReceiver { get => _filteredListReceiver; set => _filteredListReceiver = value; }
+
+        /// <summary>
+        /// Filters Data depending if transaction is incoming or outgoing
+        /// </summary>
+        /// <param name="selectedAccount"></param>
         public void FilterData(AccountModel selectedAccount)
         {
 
@@ -30,5 +31,7 @@ namespace KMS1_Udovita.Filters
                 }
             }
         }
+        
+
     }
 }

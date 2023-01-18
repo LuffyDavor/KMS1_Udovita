@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KMS1_Udovita.Models
 {
@@ -12,7 +8,7 @@ namespace KMS1_Udovita.Models
         public string ReceiverAccountNr { get; set; }
         public string Usage{ get; set; }
         public decimal Amount { get; set; }
-        public string BookingDate{ get; set; }
+        public DateTime BookingDate{ get; set; }
 
     }
 }

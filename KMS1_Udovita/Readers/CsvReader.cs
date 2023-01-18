@@ -1,12 +1,8 @@
 ﻿using KMS1_Udovita.Models;
 using KMS1_Udovita.Readers;
-using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MessageBox = System.Windows.Forms.MessageBox;
@@ -23,17 +19,22 @@ namespace KMS1_Udovita
         {
             using (FolderBrowserDialog folderDialog = new FolderBrowserDialog())
             {
+                // SET INITIAL DIRECTORY
                 folderDialog.SelectedPath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\"));
 
+                // OPEN FOLDER DIALOG
                 if (folderDialog.ShowDialog() == DialogResult.OK)
                 {
+                    // GET USER SELECTED PATH
                     string folderPath = folderDialog.SelectedPath;
 
+                    // CHECK IF NECESSARY FILES ARE IN SELECTED DIRECTORY
                     if (Directory.Exists(folderPath) &&
                         File.Exists(Path.Combine(folderPath, "Kunden.csv")) &&
                         File.Exists(Path.Combine(folderPath, "Konten.csv")) &&
                         File.Exists(Path.Combine(folderPath, "Buchungen.csv")))
                     {
+                        // GET DATA ASYNC
                         Customers = await Task.Run(() => File.ReadAllLines(Path.Combine(folderPath, "Kunden.csv"))).ConfigureAwait(false);
                         Customers = Customers.Skip(1).ToArray();
 
@@ -52,6 +53,8 @@ namespace KMS1_Udovita
         }
 
 
+        // THE FOLLOWING METHODS FOLLOW THE SAME ALGORITHM OF STORING AQUIRED DATA TO THE ACCORDING MODEL AND ADDING IT TO A LIST OF THE SAME TYPE
+
         public void StoreCustomerData()
         {
             if(Customers == null ) { return; }
@@ -63,7 +66,7 @@ namespace KMS1_Udovita
                 {
                     _customerData = new CustomerModel()
                     {
-                        CustomerID = Convert.ToInt32(singleCustomerData[0]),
+                        CustomerID = singleCustomerData[0],
                         Name = singleCustomerData[1],
 
                     };
@@ -89,7 +92,7 @@ namespace KMS1_Udovita
                 {
                     _accountData = new AccountModel()
                     {
-                        CustomerID = Convert.ToInt32(singleAccountData[0]),
+                        CustomerID = singleAccountData[0],
                         AccountNumber = singleAccountData[1],
 
                     };
@@ -119,7 +122,7 @@ namespace KMS1_Udovita
                         ReceiverAccountNr = singleTransactionData[1],
                         Usage = singleTransactionData[2],
                         Amount = Convert.ToDecimal(singleTransactionData[3].Replace('.',',')),
-                        BookingDate = singleTransactionData[4],
+                        BookingDate = DateConverter.ConvertDate(singleTransactionData[4]),
                     };
                 }
                 catch (FormatException)
