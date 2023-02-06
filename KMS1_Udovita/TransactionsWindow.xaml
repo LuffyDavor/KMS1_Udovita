@@ -181,7 +181,7 @@
                 Cursor="Hand"
                 Grid.Row="1"
                 Grid.Column="1"
-                Content="Order By Date"
+                Content="Sort By Date"
                 Foreground="Black"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Bottom"

@@ -74,9 +74,8 @@ namespace KMS1_Udovita
 
         private void btnOrder_Click(object sender, RoutedEventArgs e)
         {
-            Filter.FilterByDate(boxYear.Text, boxMonth.Text);
-            senderDataGrid.ItemsSource = Filter.FilteredListSender;
-            receiverDataGrid.ItemsSource = Filter.FilteredListReceiver;
+            senderDataGrid.ItemsSource = Filter.FilterByDate(Filter.FilteredListSender,boxYear.Text, boxMonth.Text);
+            receiverDataGrid.ItemsSource = Filter.FilterByDate(Filter.FilteredListReceiver, boxYear.Text, boxMonth.Text);
         }
 
         private void boxYear_SelectionChanged(object sender, SelectionChangedEventArgs e)

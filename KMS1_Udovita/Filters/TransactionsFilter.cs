@@ -34,19 +34,14 @@ namespace KMS1_Udovita.Filters
             }
         }
 
-        public void FilterByDate(string year, string month)
+        public List<TransactionModel> FilterByDate(List<TransactionModel> filteredList, string year, string month)
         {
             int yearInt = int.Parse(year);
             int monthInt = int.Parse(month);
 
-            FilteredListSender = FilteredListSender.Where(trans => 
-                                                          trans.BookingDate.Year == yearInt && 
-                                                          trans.BookingDate.Month == monthInt).ToList();
-
-
-            FilteredListReceiver = FilteredListReceiver.Where(trans =>
-                                                          trans.BookingDate.Year == yearInt &&
-                                                          trans.BookingDate.Month == monthInt).ToList();
+            return filteredList.Where(trans => 
+                                      trans.BookingDate.Year == yearInt && 
+                                      trans.BookingDate.Month == monthInt).ToList();
         }
 
     }
