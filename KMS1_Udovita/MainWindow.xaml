@@ -5,21 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:KMS1_Udovita"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="Customers" Height="550" Width="800"
         x:Name="myWindow"
         WindowStartupLocation="CenterScreen">
+    <Window.Background>
+        <ImageBrush ImageSource="Images/br.png" Stretch="Fill" Opacity="0.2" />
+    </Window.Background>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="600"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <DataGrid x:Name="customersDataGrid" 
+        <DataGrid x:Name="customersDataGrid"
+                  VerticalScrollBarVisibility="Hidden"
+                  HorizontalScrollBarVisibility="Hidden"
+                  BorderThickness="0"
+                  Grid.Column="0"
+                  Margin="10,10,10,10"
                   AutoGenerateColumns="False"
                   IsReadOnly="True"
+                  SelectionMode="Single"
+                  Style="{StaticResource myGrid}"
+                  
                   MouseDoubleClick="customersDataGrid_MouseDoubleClick">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Customer ID" 
+                <DataGridTextColumn Header="Customer ID"
                                     Binding="{Binding CustomerID}" 
                                     Width="*"/>
                 <DataGridTextColumn Header="Name" 
@@ -30,26 +41,30 @@
 
         <Button 
                 x:Name="btnImport"
+                Style="{StaticResource myBtn}"
+                BorderThickness="0"
                 Click="btnImport_Click"
                 Cursor="Hand"
                 Grid.Column="1"
-                Content="Import"
+                Content="Import Csv Files"
                 Foreground="Black"
-                HorizontalAlignment="Right"
-                Margin="0,0,20,25"
-                VerticalAlignment="Bottom" Height="30" Width="80"/>
+                Margin="0,0,10,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"/>
 
         <Button 
                 x:Name="btnDetails"
+                Style="{StaticResource myBtn}"
+                Visibility="Hidden"
                 Click="btnDetails_Click"
+                Margin="0,0,10,0"
                 IsEnabled="False"
                 Cursor="Hand"
                 Grid.Row="1"
                 Grid.Column="1"
-                Content="Details"
+                Content="Show Customer Details"
                 Foreground="Black"
-                HorizontalAlignment="Left"
-                Margin="10,0,20,25"
-                VerticalAlignment="Bottom" Height="30" Width="80"/>
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"/>
     </Grid>
 </Window>

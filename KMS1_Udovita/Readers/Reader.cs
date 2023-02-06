@@ -1,8 +1,5 @@
 ﻿using KMS1_Udovita.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace KMS1_Udovita.Readers
@@ -21,10 +18,15 @@ namespace KMS1_Udovita.Readers
         private readonly List<TransactionModel> _allTransactionData = new List<TransactionModel>();
         public List<TransactionModel> AllTransactionData => _allTransactionData;
 
-
+        // MODELS FOR EACH OF REQUIRED DATA TYPE
         protected CustomerModel _customerData;
         protected AccountModel _accountData;
         protected TransactionModel _transactionData;
-        public abstract void OpenFiles();
+
+        /// <summary>
+        /// Handles Opening Files Asynchrously
+        /// </summary>
+        /// <returns>Returns a task (basically void)</returns>
+        public abstract Task OpenFiles();
     }
 }

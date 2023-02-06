@@ -59,6 +59,7 @@
     <Compile Include="AccountsWindow.xaml.cs">
       <DependentUpon>AccountsWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\DateConverter.cs" />
     <Compile Include="IWindow.cs" />
     <Compile Include="Filters\AccountsFilter.cs" />
     <Compile Include="Filters\TransactionsFilter.cs" />
@@ -67,7 +68,6 @@
     <Compile Include="Models\CustomerModel.cs" />
     <Compile Include="Models\TransactionModel.cs" />
     <Compile Include="Readers\Reader.cs" />
-    <Compile Include="Readers\StoreData.cs" />
     <Compile Include="TransactionsWindow.xaml.cs">
       <DependentUpon>TransactionsWindow.xaml</DependentUpon>
     </Compile>
@@ -120,6 +120,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\br.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
